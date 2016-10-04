@@ -1,17 +1,11 @@
-﻿using System;
-
+﻿
 using Android.App;
-using Android.Content;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Android.OS;
-using Xamarin.Forms.Platform.Android;
-using Xamarin.Forms;
 using Android.Content.PM;
+using Android.OS;
 using Hanselman.Portable;
-using Android.Graphics.Drawables;
 using ImageCircle.Forms.Plugin.Droid;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
 
 namespace HanselmanAndroid
 {
@@ -31,7 +25,7 @@ namespace HanselmanAndroid
             ImageCircleRenderer.Init();
             LoadApplication(new App());
 
-         
+
         }
     }
 }
