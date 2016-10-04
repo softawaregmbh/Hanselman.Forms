@@ -35,6 +35,23 @@ namespace Softaware.UITest
             // Invoke the REPL so that we can explore the user interface
             app.Repl();
         }
+        
+        [Test]
+        public void ClickThroughTest()
+        {
+            app.Tap(x => x.Marked("OK"));
+            app.Tap(x => x.Text("About"));
+            app.Tap(x => x.Marked("OK"));
+            app.Tap(x => x.Text("Twitter"));
+            app.Back();
+            app.Tap(x => x.Marked("OK"));
+            app.Tap(x => x.Text("Hanselminutes"));
+            app.Tap(x => x.Marked("OK"));
+            app.Tap(x => x.Text("About"));
+            app.WaitForElement(x => x.Class("FormsImageView").Index(8));
+            app.WaitForElement(x => x.Text("My name is Scott Hanselman. I'm a programmer, teacher, and speaker. I work out of my home office in Portland, Oregon for the Web Platform Team at Microsoft, but this blog, its content and opinions are my own. I blog about technology, culture, gadgets, diversity, code, the web, where we're going and where we've been. I'm excited about community, social equity, media, entrepreneurship and above all, the open web."));
+            app.Screenshot("Tapped on view with class: FormsTextView");
+        }
 
 
     }
