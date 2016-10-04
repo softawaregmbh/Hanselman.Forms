@@ -1,25 +1,23 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Xamarin.Forms;
-using System.Collections.Generic;
 using Hanselman.Portable.Controls;
+using Xamarin.Forms;
 
 namespace Hanselman.Portable.Views
 {
     public class RootPage : MasterDetailPage
     {
         public static bool IsUWPDesktop { get; set; }
-        Dictionary<MenuType, NavigationPage> Pages { get; set;} 
+        Dictionary<MenuType, NavigationPage> Pages { get; set; }
         public RootPage()
         {
-            
             Pages = new Dictionary<MenuType, NavigationPage>();
             Master = new MenuPage(this);
             BindingContext = new BaseViewModel
-                {
-                    Title = "Hanselman",
-                    Icon = "slideout.png"
-                };
+            {
+                Title = "Hanselman",
+                Icon = "slideout.png"
+            };
             //setup home page
             NavigateAsync(MenuType.About);
 
@@ -68,7 +66,7 @@ namespace Hanselman.Portable.Views
             }
 
             newPage = Pages[id];
-            if(newPage == null)
+            if (newPage == null)
                 return;
 
             //pop to root for Windows Phone

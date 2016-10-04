@@ -1,6 +1,6 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Hanselman.Portable
@@ -11,6 +11,7 @@ namespace Hanselman.Portable
         {
         }
 
+        private string search = string.Empty;
         private string title = string.Empty;
         public const string TitlePropertyName = "Title";
 
@@ -22,6 +23,12 @@ namespace Hanselman.Portable
         {
             get { return title; }
             set { SetProperty(ref title, value); }
+        }
+
+        public string Search
+        {
+            get { return search; }
+            set { SetProperty(ref search, value); }
         }
 
         private string subtitle = string.Empty;

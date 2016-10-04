@@ -1,9 +1,8 @@
-﻿using System;
-using Xamarin.Forms;
-using System.Collections.ObjectModel;
-using LinqToTwitter;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
+using LinqToTwitter;
+using Xamarin.Forms;
 
 namespace Hanselman.Portable
 {
@@ -61,14 +60,16 @@ namespace Hanselman.Portable
 
                 var twitterContext = new TwitterContext(auth);
 
-                var queryResponse = await
-                  (from tweet in twitterContext.Status
-                   where tweet.Type == StatusType.User &&
-                     tweet.ScreenName == "shanselman" &&
-                     tweet.Count == 100 &&
-                     tweet.IncludeRetweets == true &&
-                     tweet.ExcludeReplies == true
-                   select tweet).ToListAsync();
+                var query = from tweet in twitterContext.Status
+                            where tweet.Type == StatusType.User &&
+                                  tweet.ScreenName == "shanselman" &&
+                                  tweet.Count == 100 &&
+                                  tweet.IncludeRetweets == true &&
+                                  tweet.ExcludeReplies == true &&
+                                  (string.IsNullOrWhiteSpace(Search) || tweet.Text.Contains(Search))
+                            select tweet;
+
+                var queryResponse = await query.ToListAsync();
 
                 var tweets =
                   (from tweet in queryResponse

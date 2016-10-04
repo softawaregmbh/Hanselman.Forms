@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Xml.Linq;
+using Xamarin.Forms;
 
 namespace Hanselman.Portable.ViewModels
 {
@@ -26,7 +24,7 @@ namespace Hanselman.Portable.ViewModels
                     break;
                 case MenuType.Ratchet:
                     image = "ratchet_full.jpg";
-                    Title= "Ratchet & The Geek";
+                    Title = "Ratchet & The Geek";
                     break;
                 case MenuType.DeveloperLife:
                     image = "tdl_full.jpg";
@@ -70,7 +68,7 @@ namespace Hanselman.Portable.ViewModels
             get { return loadItemsCommand ?? (loadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand())); }
         }
 
-        private async Task ExecuteLoadItemsCommand()
+        public async Task ExecuteLoadItemsCommand()
         {
             if (IsBusy)
                 return;

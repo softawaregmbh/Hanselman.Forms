@@ -1,11 +1,5 @@
 ﻿using Hanselman.Portable.Helpers;
 using Plugin.Share;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 
 namespace Hanselman.Portable.Views
@@ -32,15 +26,13 @@ namespace Hanselman.Portable.Views
         {
             InitializeComponent();
 
-            BindingContext = new TwitterViewModel();
-
+            var viewModel = new TwitterViewModel();
+            BindingContext = viewModel;
 
             listView.ItemTapped += (sender, args) =>
             {
                 if (listView.SelectedItem == null)
                     return;
-
-
 
                 var tweet = listView.SelectedItem as Tweet;
 
@@ -50,6 +42,22 @@ namespace Hanselman.Portable.Views
                     OpenBrowser("http://m.twitter.com/shanselman/status/" + tweet.StatusID);
 
                 listView.SelectedItem = null;
+            };
+
+            var searched = false;
+            searchBar.SearchButtonPressed += (sender, args) =>
+            {
+                viewModel.ExecuteLoadTweetsCommand();
+                searched = true;
+            };
+
+            searchBar.TextChanged += (sender, args) =>
+            {
+                if (string.IsNullOrWhiteSpace(viewModel.Search) && searched)
+                {
+                    searched = false;
+                    viewModel.ExecuteLoadTweetsCommand();
+                }
             };
         }
 

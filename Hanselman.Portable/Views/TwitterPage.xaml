@@ -1,67 +1,88 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentPage x:Class="Hanselman.Portable.Views.TwitterPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Hanselman.Portable.Views.TwitterPage"
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
-             Title="{Binding Title}" Icon="{Binding Icon}"  IsBusy="{Binding IsBusy}">
-    <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-        <ListView 
-              CachingStrategy="RecycleElement"
-              x:Name="listView" 
-              ItemsSource="{Binding Tweets}"
-              HasUnevenRows="True"
-              RowHeight="150"
-              IsPullToRefreshEnabled="True"
-              RefreshCommand="{Binding LoadTweetsCommand}"
-              IsRefreshing="{Binding IsBusy, Mode=OneWay}"
-            AbsoluteLayout.LayoutFlags="All"
-            AbsoluteLayout.LayoutBounds="0,0,1,1">
-      <ListView.ItemTemplate>
-        <DataTemplate>
-          <ViewCell>
-            <Grid Padding="10,5">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-              </Grid.ColumnDefinitions>
-              <controls:CircleImage Source="{Binding Image}"
-                                    VerticalOptions="Center"
-                                    BorderColor="#03A9F4"
-                                    BorderThickness="2"
-                                    FillColor="#03A9F4">
-                <controls:CircleImage.WidthRequest>
-                  <OnPlatform x:TypeArguments="x:Double">
-                    <OnPlatform.iOS>55</OnPlatform.iOS>
-                    <OnPlatform.Android>55 </OnPlatform.Android>
-                    <OnPlatform.WinPhone>75</OnPlatform.WinPhone>
-                  </OnPlatform>
-                 </controls:CircleImage.WidthRequest>
-              <controls:CircleImage.HeightRequest>
-                  <OnPlatform x:TypeArguments="x:Double">
-                    <OnPlatform.iOS>55</OnPlatform.iOS>
-                    <OnPlatform.Android>55</OnPlatform.Android>
-                    <OnPlatform.WinPhone>75</OnPlatform.WinPhone>
-                  </OnPlatform>
-                 </controls:CircleImage.HeightRequest>
-              </controls:CircleImage>
-              <StackLayout Grid.Column="1" 
-                           Padding="8" 
-                           Spacing="4"
-                           VerticalOptions="Center">
-                <Label Text="{Binding Date}" FontSize="Medium"  TextColor="#3498DB" LineBreakMode="NoWrap"/>
-                <Label Text="{Binding Text}" x:Name="TweetText" FontSize="Small" LineBreakMode="WordWrap"/>
-              </StackLayout>
-            </Grid>
-          </ViewCell>
-        </DataTemplate>
-      </ListView.ItemTemplate>
-    </ListView>
-        <StackLayout IsVisible="{Binding IsBusy}" BackgroundColor="#80000000" Padding="12"
-                                 AbsoluteLayout.LayoutFlags="PositionProportional"
-                                 AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
-            <ActivityIndicator IsRunning="{Binding IsBusy}" Color ="White">
-            </ActivityIndicator>
-            <Label Text="Loading Twitter..." HorizontalOptions="Center" TextColor="White"/>
+             Title="{Binding Title}"
+             Icon="{Binding Icon}"
+             IsBusy="{Binding IsBusy}">
+    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <!--<BoxView HeightRequest="75"
+                 HorizontalOptions="FillAndExpand"
+                 Color="Color.Accent">
+            <Entry HeightRequest="55"
+                   HorizontalOptions="FillAndExpand"
+                   Text="I am an Entry" />
+        </BoxView>-->
+        <SearchBar x:Name="searchBar"
+                   Placeholder="Search..."
+                   Text="{Binding Search}" />
+        <ListView x:Name="listView"
+                  AbsoluteLayout.LayoutBounds="0,0,1,1"
+                  AbsoluteLayout.LayoutFlags="All"
+                  CachingStrategy="RecycleElement"
+                  HasUnevenRows="True"
+                  IsPullToRefreshEnabled="True"
+                  IsRefreshing="{Binding IsBusy,
+                                         Mode=OneWay}"
+                  ItemsSource="{Binding Tweets}"
+                  RefreshCommand="{Binding LoadTweetsCommand}"
+                  RowHeight="150">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="10,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <controls:CircleImage BorderColor="#03A9F4"
+                                                  BorderThickness="2"
+                                                  FillColor="#03A9F4"
+                                                  Source="{Binding Image}"
+                                                  VerticalOptions="Center">
+                                <controls:CircleImage.WidthRequest>
+                                    <OnPlatform x:TypeArguments="x:Double">
+                                        <OnPlatform.iOS>55</OnPlatform.iOS>
+                                        <OnPlatform.Android>55</OnPlatform.Android>
+                                        <OnPlatform.WinPhone>75</OnPlatform.WinPhone>
+                                    </OnPlatform>
+                                </controls:CircleImage.WidthRequest>
+                                <controls:CircleImage.HeightRequest>
+                                    <OnPlatform x:TypeArguments="x:Double">
+                                        <OnPlatform.iOS>55</OnPlatform.iOS>
+                                        <OnPlatform.Android>55</OnPlatform.Android>
+                                        <OnPlatform.WinPhone>75</OnPlatform.WinPhone>
+                                    </OnPlatform>
+                                </controls:CircleImage.HeightRequest>
+                            </controls:CircleImage>
+                            <StackLayout Grid.Column="1"
+                                         Padding="8"
+                                         Spacing="4"
+                                         VerticalOptions="Center">
+                                <Label FontSize="Medium"
+                                       LineBreakMode="NoWrap"
+                                       Text="{Binding Date}"
+                                       TextColor="#3498DB" />
+                                <Label x:Name="TweetText"
+                                       FontSize="Small"
+                                       LineBreakMode="WordWrap"
+                                       Text="{Binding Text}" />
+                            </StackLayout>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackLayout AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
+                     AbsoluteLayout.LayoutFlags="PositionProportional"
+                     BackgroundColor="#80000000"
+                     IsVisible="{Binding IsBusy}"
+                     Padding="12">
+            <ActivityIndicator IsRunning="{Binding IsBusy}" Color="White" />
+            <Label HorizontalOptions="Center"
+                   Text="Loading Twitter..."
+                   TextColor="White" />
         </StackLayout>
-    </AbsoluteLayout>
+    </StackLayout>
 </ContentPage>
