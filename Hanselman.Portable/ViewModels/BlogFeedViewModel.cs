@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using Xamarin.Forms;
-using System.Threading.Tasks;
-using System.Net.Http;
-using System.Collections.Generic;
-using System.Xml.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
+using Hanselman.Portable.Manager;
+using Xamarin.Forms;
 
 namespace Hanselman.Portable
 {
     public class BlogFeedViewModel : BaseViewModel
     {
+        private IFeedManager<FeedItem> feedManager;
+
         public BlogFeedViewModel()
         {
             Title = "Blog";
             Icon = "blog.png";
+
+            this.feedManager = ManagerFactory.CreateBlogFeedManager("http://feeds.hanselman.com/ScottHanselman");
         }
 
 
@@ -61,15 +62,9 @@ namespace Hanselman.Portable
             var error = false;
             try
             {
-                var responseString = string.Empty;
-                using (var httpClient = new HttpClient())
-                {
-                    var feed = "http://feeds.hanselman.com/ScottHanselman";
-                    responseString = await httpClient.GetStringAsync(feed);
-                }
-
                 FeedItems.Clear();
-                var items = await ParseFeed(responseString);
+
+                var items = await this.feedManager.LoadItemsAsync();
                 foreach (var item in items)
                 {
                     FeedItems.Add(item);
@@ -88,32 +83,6 @@ namespace Hanselman.Portable
             }
 
             IsBusy = false;
-        }
-
-
-
-        /// <summary>
-        /// Parse the RSS Feed
-        /// </summary>
-        /// <param name="rss"></param>
-        /// <returns></returns>
-        private async Task<List<FeedItem>> ParseFeed(string rss)
-        {
-            return await Task.Run(() =>
-                {
-                    var xdoc = XDocument.Parse(rss);
-                    var id = 0;
-                    return (from item in xdoc.Descendants("item")
-                            select new FeedItem
-                            {
-                                Title = (string)item.Element("title"),
-                                Description = (string)item.Element("description"),
-                                Link = (string)item.Element("link"),
-                                PublishDate = (string)item.Element("pubDate"),
-                                Category = (string)item.Element("category"),
-                                Id = id++
-                            }).ToList();
-                });
         }
 
         /// <summary>

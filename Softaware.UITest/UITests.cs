@@ -9,6 +9,7 @@ namespace Softaware.UITest
     {
         AndroidApp app;
 
+
         [SetUp]
         public void BeforeEachTest()
         {
@@ -45,14 +46,6 @@ namespace Softaware.UITest
             this.TestMenuItem("Hanselminutes");
             this.TestMenuItem("Ratchet");
             this.TestMenuItem("Developers Life");
-
-            //app.Tap(x => x.Marked("OK"));
-            //app.Tap(x => x.Text("About"));
-
-            //app.WaitForElement(x => x.Class("FormsImageView").Index(8));
-            //app.WaitForElement(x => x.Text("My name is Scott Hanselman. I'm a programmer, teacher, and speaker. I work out of my home office in Portland, Oregon for the Web Platform Team at Microsoft, but this blog, its content and opinions are my own. I blog about technology, culture, gadgets, diversity, code, the web, where we're going and where we've been. I'm excited about community, social equity, media, entrepreneurship and above all, the open web."));
-
-            //app.Screenshot("Tapped on view with class: FormsTextView");
         }
 
         private void TestMenuItem(string name)
@@ -79,31 +72,32 @@ namespace Softaware.UITest
             app.PressEnter();
             app.Screenshot("Valid tweet filter");
 
-            //app.WaitFor(() =>
-            //{
-            //    return app.Query(x => x.Class("LisView").Child()).Length > 0;
-            //});
-            app.WaitForElement(x => x.Class("ListView").Index(0));
-            app.Tap(x => x.Class("ListView").Index(0));
+            app.WaitForElement(x => x.Class("ListView").Child().Index(0));
+            app.Tap(x => x.Class("ListView").Child().Index(0));
             app.Screenshot("Valid tweet filter - First Item Tap");
         }
 
         [Test]
         public void TweetFilterResultsInEmptyList()
         {
+            var search = "asdfghjlk123456 stupd search";
+
             app.Tap(x => x.Marked("OK"));
             app.WaitForElement(x => x.Marked("Twitter"));
             app.Tap(x => x.Text("Twitter"));
 
             app.WaitForElement(x => x.Marked("search_bar"));
             app.ClearText(x => x.Marked("search_bar"));
-            app.EnterText(x => x.Marked("search_bar"), "asdfghjlk123456 stupd search");
+            app.EnterText(x => x.Marked("search_bar"), search);
             app.PressEnter();
+            app.WaitForNoElement(x => x.Class("ListView").Child().Index(0));
 
             app.Screenshot("Empty Tweet List");
 
-            // this should result in an error as no tweets match the search pattern
-            app.WaitForElement(x => x.Class("ListView").Index(0));
+            // For demonstration purposes this should result in an error as no tweets match the search pattern
+            // TODO: It is necessary to adjust this test
+            app.WaitForElement(x => x.Class("ListView").Child().Index(0));
+            app.Tap(x => x.Class("ListView").Child().Index(0));
         }
     }
 }

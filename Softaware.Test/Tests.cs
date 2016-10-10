@@ -1,14 +1,24 @@
-﻿using System.Linq;
+﻿#define MOCK
+
+using System.Linq;
 using System.Threading.Tasks;
 using Hanselman.Portable;
+using Hanselman.Portable.Manager;
 using Hanselman.Portable.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 
 namespace Softaware.Test
 {
     [TestClass]
     public class Tests
     {
+        [TestInitialize]
+        public void Init()
+        {
+            ManagerFactory.IsMocked = true;
+        }
+
         [TestMethod]
         public async Task LoadTweets()
         {
@@ -29,11 +39,9 @@ namespace Softaware.Test
                 Search = search
             };
 
-            var task = viewModel.ExecuteLoadTweetsCommand();
+            await viewModel.ExecuteLoadTweetsCommand();
 
-            await CheckIfBusy(task, viewModel);
-
-            Assert.IsTrue(viewModel.Tweets.Any(t => !t.Text.Contains(search)));
+            Assert.IsFalse(viewModel.Tweets.Any(t => !t.Text.Contains(search)));
         }
 
         [TestMethod]

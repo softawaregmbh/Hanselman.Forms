@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
-using System.Xml.Linq;
+using Hanselman.Portable.Manager;
 using Xamarin.Forms;
 
 namespace Hanselman.Portable.ViewModels
@@ -11,26 +9,35 @@ namespace Hanselman.Portable.ViewModels
     public class PodcastViewModel : BaseViewModel
     {
         MenuType item;
-        private string image;
+
+        private IFeedManager<FeedItem> feedManager;
+
         public PodcastViewModel(MenuType item)
         {
             this.item = item;
+            var image = string.Empty;
+            var url = string.Empty;
 
             switch (item)
             {
                 case MenuType.Hanselminutes:
                     image = "hm_full.jpg";
+                    url = "http://feeds.podtrac.com/9dPm65vdpLL1";
                     Title = "Hanselminutes";
                     break;
                 case MenuType.Ratchet:
                     image = "ratchet_full.jpg";
+                    url = "http://feeds.feedburner.com/RatchetAndTheGeek?format=xml";
                     Title = "Ratchet & The Geek";
                     break;
                 case MenuType.DeveloperLife:
                     image = "tdl_full.jpg";
+                    url = "http://feeds.feedburner.com/ThisDevelopersLife?format=xml";
                     Title = "This Developer Life";
                     break;
             }
+
+            this.feedManager = ManagerFactory.CreateHttpFeedManager(image, url);
         }
 
 
@@ -77,25 +84,9 @@ namespace Hanselman.Portable.ViewModels
             var error = false;
             try
             {
-                var httpClient = new HttpClient();
-                var feed = string.Empty;
-
-                switch (item)
-                {
-                    case MenuType.Hanselminutes:
-                        feed = "http://feeds.podtrac.com/9dPm65vdpLL1";
-                        break;
-                    case MenuType.Ratchet:
-                        feed = "http://feeds.feedburner.com/RatchetAndTheGeek?format=xml";
-                        break;
-                    case MenuType.DeveloperLife:
-                        feed = "http://feeds.feedburner.com/ThisDevelopersLife?format=xml";
-                        break;
-                }
-                var responseString = await httpClient.GetStringAsync(feed);
-
                 FeedItems.Clear();
-                var items = await ParseFeed(responseString);
+
+                var items = await this.feedManager.LoadItemsAsync();
                 foreach (var feedItem in items)
                 {
                     FeedItems.Add(feedItem);
@@ -117,34 +108,6 @@ namespace Hanselman.Portable.ViewModels
             IsBusy = false;
         }
 
-
-        /// <summary>
-        /// Parse the RSS Feed
-        /// </summary>
-        /// <param name="rss"></param>
-        /// <returns></returns>
-        private async Task<List<FeedItem>> ParseFeed(string rss)
-        {
-            return await Task.Run(() =>
-            {
-                var xdoc = XDocument.Parse(rss);
-                var id = 0;
-                return (from item in xdoc.Descendants("item")
-                        let enclosure = item.Element("enclosure")
-                        where enclosure != null
-                        select new FeedItem
-                        {
-                            Title = (string)item.Element("title"),
-                            Description = (string)item.Element("description"),
-                            Link = (string)item.Element("link"),
-                            PublishDate = (string)item.Element("pubDate"),
-                            Category = (string)item.Element("category"),
-                            Mp3Url = (string)enclosure.Attribute("url"),
-                            Image = image,
-                            Id = id++
-                        }).ToList();
-            });
-        }
 
         /// <summary>
         /// Gets a specific feed item for an Id

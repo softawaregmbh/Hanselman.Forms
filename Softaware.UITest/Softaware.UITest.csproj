@@ -58,12 +58,17 @@
     <Compile Include="UITests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hanselman.Android\Hanselman.Android.csproj">
       <Project>{6be27b2e-552f-43b2-82d5-058d7f180cec}</Project>
       <Name>Hanselman.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hanselman.Portable\Hanselman.csproj">
+      <Project>{028799A4-E2FD-4901-B950-666C00EFBF63}</Project>
+      <Name>Hanselman</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
