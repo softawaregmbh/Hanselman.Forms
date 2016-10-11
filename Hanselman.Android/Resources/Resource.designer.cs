@@ -26,6 +26,7 @@ namespace HanselmanAndroid
 		
 		public static void UpdateIdValues()
 		{
+			global::Gcm.Client.Resource.String.library_name = global::HanselmanAndroid.Resource.String.library_name;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::HanselmanAndroid.Resource.Attribute.actionBarSize;
 		}
 		
@@ -3363,8 +3364,8 @@ namespace HanselmanAndroid
 			// aapt resource value: 0x7f070040
 			public const int abc_toolbar_collapse_description = 2131165248;
 			
-			// aapt resource value: 0x7f070046
-			public const int app_name = 2131165254;
+			// aapt resource value: 0x7f070047
+			public const int app_name = 2131165255;
 			
 			// aapt resource value: 0x7f070042
 			public const int appbar_scrolling_view_behavior = 2131165250;
@@ -3468,8 +3469,11 @@ namespace HanselmanAndroid
 			// aapt resource value: 0x7f07001e
 			public const int common_signin_button_text_long = 2131165214;
 			
+			// aapt resource value: 0x7f070046
+			public const int hello = 2131165254;
+			
 			// aapt resource value: 0x7f070045
-			public const int hello = 2131165253;
+			public const int library_name = 2131165253;
 			
 			// aapt resource value: 0x7f07001f
 			public const int mr_button_content_description = 2131165215;

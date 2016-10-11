@@ -12,12 +12,15 @@ namespace Hanselman.Portable.Views
         public RootPage()
         {
             Pages = new Dictionary<MenuType, NavigationPage>();
-            Master = new MenuPage(this);
+
+            Master = new LoginPage(this);
+
             BindingContext = new BaseViewModel
             {
                 Title = "Hanselman",
                 Icon = "slideout.png"
             };
+
             //setup home page
             NavigateAsync(MenuType.About);
 
