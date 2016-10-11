@@ -44,9 +44,10 @@ namespace HanselmanAndroid
             LoadApplication(app);
             CrashManager.Register(this);
             MetricsManager.Register(Application);
-            FeedbackManager.Register(Application);
 
-            FeedbackManager.ShowFeedbackActivity(ApplicationContext);
+            // uncomment to open feedback form right after startup
+            //FeedbackManager.Register(Application);
+            //FeedbackManager.ShowFeedbackActivity(ApplicationContext);
 
             HockeyApp.MetricsManager.TrackEvent("Custom Event");
         }
