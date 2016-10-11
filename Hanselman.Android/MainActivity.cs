@@ -6,6 +6,8 @@ using Android.Content.PM;
 using Android.OS;
 using Hanselman.Portable;
 using Hanselman.Portable.Auth;
+using HockeyApp.Android;
+using HockeyApp.Android.Metrics;
 using ImageCircle.Forms.Plugin.Droid;
 using Microsoft.WindowsAzure.MobileServices;
 using Xamarin.Forms;
@@ -40,6 +42,13 @@ namespace HanselmanAndroid
 
             this.app = new App();
             LoadApplication(app);
+            CrashManager.Register(this);
+            MetricsManager.Register(Application);
+            FeedbackManager.Register(Application);
+
+            FeedbackManager.ShowFeedbackActivity(ApplicationContext);
+
+            HockeyApp.MetricsManager.TrackEvent("Custom Event");
         }
 
         private void CreateAndShowDialog(String message, String title)

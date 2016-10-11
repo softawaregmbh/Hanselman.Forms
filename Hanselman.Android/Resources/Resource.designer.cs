@@ -146,6 +146,7 @@ namespace HanselmanAndroid
 			global::HockeyApp.Resource.Style.HockeyApp_ButtonStyle = global::HanselmanAndroid.Resource.Style.HockeyApp_ButtonStyle;
 			global::HockeyApp.Resource.Style.HockeyApp_EditTextStyle = global::HanselmanAndroid.Resource.Style.HockeyApp_EditTextStyle;
 			global::HockeyApp.Resource.Style.HockeyApp_SingleLineInputStyle = global::HanselmanAndroid.Resource.Style.HockeyApp_SingleLineInputStyle;
+			global::HockeyApp.Resource.Style.HockeyApp_SingleLineInputStyle = global::HanselmanAndroid.Resource.Style.HockeyApp_SingleLineInputStyle;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::HanselmanAndroid.Resource.Attribute.actionBarSize;
 		}
 		
