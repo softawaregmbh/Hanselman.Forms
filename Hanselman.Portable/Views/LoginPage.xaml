@@ -5,9 +5,20 @@
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
              Title="{Binding Title}">
     <ContentPage.Content>
-        <Button x:Name="loginButton"
-                Clicked="loginButton_Clicked"
-                MinimumHeightRequest="30"
-                Text="Sign-in" />
+
+        <StackLayout HorizontalOptions="FillAndExpand"
+                     Spacing="30"
+                     VerticalOptions="Center">
+            <Label FontSize="30"
+                   HorizontalOptions="Center"
+                   Text="Welcome, please sign-in" />
+            <Button x:Name="loginButton"
+                    Clicked="loginButton_Clicked"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    MinimumHeightRequest="30"
+                    Text="Sign-in with Facebook"
+                    VerticalOptions="CenterAndExpand" />
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

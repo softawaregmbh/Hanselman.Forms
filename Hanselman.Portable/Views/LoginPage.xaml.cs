@@ -1,23 +1,19 @@
 ﻿
 using System;
+using Hanselman.Portable.Auth;
 using Xamarin.Forms;
 
 namespace Hanselman.Portable.Views
 {
     public partial class LoginPage : ContentPage
     {
-        private RootPage root;
-        public bool IsAuthenticated { get; private set; } = false;
+        private readonly ILoginManager loginManager;
 
-        public LoginPage(RootPage root)
+        public LoginPage(ILoginManager loginManager)
         {
-            this.root = root;
             InitializeComponent();
 
-            if (!App.IsWindows10)
-            {
-                BackgroundColor = Color.FromHex("#03A9F4");
-            }
+            this.loginManager = loginManager;
 
             BindingContext = new BaseViewModel
             {
@@ -28,13 +24,8 @@ namespace Hanselman.Portable.Views
 
         public async void loginButton_Clicked(object sender, EventArgs e)
         {
-            if (App.Authenticator != null)
-                this.IsAuthenticated = await App.Authenticator.Authenticate();
-
-            if (this.IsAuthenticated)
-            {
-
-            }
+            // See App.OnResume to see what happens after login
+            await App.Authenticator.Authenticate();
         }
     }
 }

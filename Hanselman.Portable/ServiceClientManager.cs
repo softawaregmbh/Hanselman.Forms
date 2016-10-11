@@ -5,14 +5,11 @@ namespace Hanselman.Portable.Auth
 {
     public class ServiceClientManager
     {
-        // Define a authenticated user.
-        private MobileServiceUser user;
-
         private static ServiceClientManager instance;
 
         private ServiceClientManager()
         {
-            this.Client = new MobileServiceClient(new Uri("http://MobileDevOps.servicebus.windows.net/"));
+            this.Client = new MobileServiceClient(new Uri("http://mobiledevops.azurewebsites.net/"));
         }
 
         public MobileServiceClient Client { get; private set; }

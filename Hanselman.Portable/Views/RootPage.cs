@@ -9,11 +9,12 @@ namespace Hanselman.Portable.Views
     {
         public static bool IsUWPDesktop { get; set; }
         Dictionary<MenuType, NavigationPage> Pages { get; set; }
+
         public RootPage()
         {
             Pages = new Dictionary<MenuType, NavigationPage>();
 
-            Master = new LoginPage(this);
+            Master = new MenuPage(this);
 
             BindingContext = new BaseViewModel
             {
@@ -26,8 +27,6 @@ namespace Hanselman.Portable.Views
 
             InvalidateMeasure();
         }
-
-
 
         public async Task NavigateAsync(MenuType id)
         {

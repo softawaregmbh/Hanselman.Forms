@@ -6,8 +6,6 @@ using Android.Content.PM;
 using Android.OS;
 using Hanselman.Portable;
 using Hanselman.Portable.Auth;
-using HockeyApp.Android;
-using HockeyApp.Android.Metrics;
 using ImageCircle.Forms.Plugin.Droid;
 using Microsoft.WindowsAzure.MobileServices;
 using Xamarin.Forms;
@@ -23,6 +21,9 @@ namespace HanselmanAndroid
     {
         // Define a authenticated user.
         private MobileServiceUser user;
+        private App app;
+
+        public bool IsAuthenticated { get; private set; }
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -37,28 +38,8 @@ namespace HanselmanAndroid
             ImageCircleRenderer.Init();
             App.Init(this);
 
-            LoadApplication(new App());
-
-
-            // Notification which does not work at the moment
-            //try
-            //{
-            //    // Check to ensure everything's setup right
-            //    GcmClient.CheckDevice(this);
-            //    GcmClient.CheckManifest(this);
-
-            //    // Register for push notifications
-            //    System.Diagnostics.Debug.WriteLine("Registering...");
-            //    GcmClient.Register(this, PushHandlerBroadcastReceiver.SENDER_IDS);
-            //}
-            //catch (Java.Net.MalformedURLException)
-            //{
-            //    CreateAndShowDialog("There was an error creating the client. Verify the URL.", "Error");
-            //}
-            //catch (Exception e)
-            //{
-            //    CreateAndShowDialog(e.Message, "Error");
-            //}
+            this.app = new App();
+            LoadApplication(app);
         }
 
         private void CreateAndShowDialog(String message, String title)
@@ -72,7 +53,7 @@ namespace HanselmanAndroid
 
         public async Task<bool> Authenticate()
         {
-            var success = false;
+            this.IsAuthenticated = false;
             var message = string.Empty;
             try
             {
@@ -81,9 +62,8 @@ namespace HanselmanAndroid
 
                 if (user != null)
                 {
-                    message = string.Format("you are now signed-in as {0}.",
-                        user.UserId);
-                    success = true;
+                    message = string.Format("you are now signed-in as {0}.", user.UserId);
+                    this.IsAuthenticated = true;
                 }
             }
             catch (Exception ex)
@@ -97,7 +77,7 @@ namespace HanselmanAndroid
             builder.SetTitle("Sign-in result");
             builder.Create().Show();
 
-            return success;
+            return this.IsAuthenticated;
         }
 
         // Create a new instance field for this activity.

@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Auth\IAuthenticate.cs" />
+    <Compile Include="Auth\ILoginManager.cs" />
     <Compile Include="ServiceClientManager.cs" />
     <Compile Include="Helpers\AudioPlayer.cs" />
     <Compile Include="Helpers\FancyListCell.cs" />

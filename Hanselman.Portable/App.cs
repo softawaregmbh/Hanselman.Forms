@@ -1,21 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using Hanselman.Portable.Auth;
 using Hanselman.Portable.Views;
 using Xamarin.Forms;
 
 namespace Hanselman.Portable
 {
-    public interface IAuthenticate
-    {
-        Task<bool> Authenticate();
-    }
-
-    public class App : Application
+    public class App : Application, ILoginManager
     {
         public static bool IsWindows10 { get; set; }
         public App()
         {
             // The root page of your application
-            MainPage = new RootPage();
+            MainPage = new NavigationPage(new LoginPage(this));
         }
 
         public static IAuthenticate Authenticator { get; private set; }
@@ -25,19 +20,26 @@ namespace Hanselman.Portable
             Authenticator = authenticator;
         }
 
-        protected override void OnStart()
-        {
-
-        }
-
-        protected override void OnSleep()
-        {
-            // Handle when your app sleeps
-        }
-
         protected override void OnResume()
         {
-            // Handle when your app resumes
+            if (Authenticator.IsAuthenticated)
+            {
+                this.ShowMainPage();
+            }
+            else
+            {
+                this.ShowLogin();
+            }
+        }
+
+        public void ShowMainPage()
+        {
+            MainPage = new RootPage();
+        }
+
+        public void ShowLogin()
+        {
+            MainPage = new LoginPage(this);
         }
     }
 }
