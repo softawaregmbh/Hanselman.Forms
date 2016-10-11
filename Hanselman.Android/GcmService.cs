@@ -34,7 +34,7 @@ namespace HanselmanAndroid
 
             RegistrationID = registrationId;
 
-            var client = new MobileServiceClient(new Uri("http://MobileDevOps.servicebus.windows.net/"));
+            var client = new MobileServiceClient(new Uri("https://MobileDevOps.servicebus.windows.net/"));
             var push = client.GetPush();
 
             MainActivity.CurrentActivity.RunOnUiThread(() => Register(push, new[] { "test" }));

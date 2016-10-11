@@ -12,7 +12,7 @@ namespace Hanselman.Portable.Auth
 
         private ServiceClientManager()
         {
-            this.Client = new MobileServiceClient(new Uri("http://MobileDevOps.servicebus.windows.net/"));
+            this.Client = new MobileServiceClient(new Uri("https://mobiledevops.azurewebsites.net"));
         }
 
         public MobileServiceClient Client { get; private set; }

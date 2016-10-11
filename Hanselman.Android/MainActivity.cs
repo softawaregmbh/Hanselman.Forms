@@ -39,6 +39,13 @@ namespace HanselmanAndroid
 
             LoadApplication(new App());
 
+            CrashManager.Register(this);
+            MetricsManager.Register(Application);
+            FeedbackManager.Register(Application);
+
+            FeedbackManager.ShowFeedbackActivity(ApplicationContext);
+
+            HockeyApp.MetricsManager.TrackEvent("Custom Event");
 
             // Notification which does not work at the moment
             //try
