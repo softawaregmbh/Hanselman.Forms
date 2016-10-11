@@ -26,6 +26,7 @@ namespace HanselmanAndroid
 		
 		public static void UpdateIdValues()
 		{
+			global::Gcm.Client.Resource.String.library_name = global::HanselmanAndroid.Resource.String.library_name;
 			global::HockeyApp.Resource.Color.hockeyapp_background_header = global::HanselmanAndroid.Resource.Color.hockeyapp_background_header;
 			global::HockeyApp.Resource.Color.hockeyapp_background_light = global::HanselmanAndroid.Resource.Color.hockeyapp_background_light;
 			global::HockeyApp.Resource.Color.hockeyapp_background_white = global::HanselmanAndroid.Resource.Color.hockeyapp_background_white;
@@ -145,7 +146,6 @@ namespace HanselmanAndroid
 			global::HockeyApp.Resource.String.library_name = global::HanselmanAndroid.Resource.String.library_name;
 			global::HockeyApp.Resource.Style.HockeyApp_ButtonStyle = global::HanselmanAndroid.Resource.Style.HockeyApp_ButtonStyle;
 			global::HockeyApp.Resource.Style.HockeyApp_EditTextStyle = global::HanselmanAndroid.Resource.Style.HockeyApp_EditTextStyle;
-			global::HockeyApp.Resource.Style.HockeyApp_SingleLineInputStyle = global::HanselmanAndroid.Resource.Style.HockeyApp_SingleLineInputStyle;
 			global::HockeyApp.Resource.Style.HockeyApp_SingleLineInputStyle = global::HanselmanAndroid.Resource.Style.HockeyApp_SingleLineInputStyle;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::HanselmanAndroid.Resource.Attribute.actionBarSize;
 		}
